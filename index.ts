@@ -12,7 +12,6 @@ const port = 3005;
 //For Handlebars
 app.use(express.urlencoded({ extended: false }));
 app.set("views", path.join(__dirname, "views"));
-//app.set("views", path.join(__dirname, "home"));
 app.set("view engine", "hbs");
 
 // Static folder
@@ -24,16 +23,16 @@ app.use(cors());
 //For all defined Routes
 app.use("/", shopsRoutes);
 
-app.get("/", (req, res) => {
-  res.render("homePage");
-});
+// app.get("/", (req, res) => {
+//   res.render("homePage");
+// });
 
 app.get("/shop-list", (req, res) => {
-  console.log("Shop array here", shops);
+  const shopMinRating = shops.filter(
+    (shop) => shop.rating >= +req.query.minRating!
+  );
   if (req.query.minRating) {
-    return res.json(
-      shops.filter((shop) => shop.rating >= +req.query.minRating!)
-    );
+    return res.json(shopMinRating);
   } else {
     return res.render("webPage", { shops: shops });
   }
