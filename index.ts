@@ -23,9 +23,9 @@ app.use(cors());
 //For all defined Routes
 app.use("/", shopsRoutes);
 
-// app.get("/", (req, res) => {
-//   res.render("homePage");
-// });
+app.get("/", (req, res) => {
+  res.render("homePage");
+});
 
 app.get("/shop-list", (req, res) => {
   const shopMinRating = shops.filter(
